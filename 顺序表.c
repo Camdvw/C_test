@@ -105,7 +105,7 @@ Status GetElem(SqList L,int i,ElemType *e)
 }
 
 //找到第一个满足指定关系的元素的位置
-//操作：返回L中第1个与e满足关系的元素位序，此处以"与e相等"为条件
+//操作：返回L中第1个与e满足关系的元素位序，若不存在该元素，则返回0，此处以"与e相等"为条件
 int LocateElem(SqList L,ElemType e)
 {
     int i;
@@ -118,7 +118,7 @@ int LocateElem(SqList L,ElemType e)
             break;
     }
     if(i==L.length)
-        return ERROR;
+        return 0;
     return i+1;
 }
 
