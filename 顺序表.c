@@ -129,7 +129,7 @@ Status ListTraverse(SqList L)
     if(L.length==0)
         return ERROR;
     for(int i=0;i<L.length;i++)
-        printf("%d",L.data[i]);
+        printf("%d\t",L.data[i]);
     printf("\n");
     return OK;
 }
