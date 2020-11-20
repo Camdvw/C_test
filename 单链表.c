@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include<stdlib.h>
 #include<time.h>
+#include"LinkList.h"
 
 #define OK 1
 #define ERROR 0
@@ -18,8 +19,7 @@ typedef struct Node
 typedef struct Node *LinkList;
 
 //初始化单链表
-Status InitLIst(LinkList *L)
-{
+Status InitList(LinkList *L) {
     //创建头结点，为头结点申请空间
     *L = (LinkList)malloc(sizeof(Node));
     //判定存储分配是否成功
@@ -32,8 +32,7 @@ Status InitLIst(LinkList *L)
 
 //判定单链表是否为空表
 //操作：如L为空表返回TRUE，否则返回FALSE
-Status ListEmpty (LinkList L)
-{
+Status ListEmpty (LinkList L) {
     if(L->next)
     return FALSE;
     else
@@ -42,8 +41,7 @@ Status ListEmpty (LinkList L)
 
 //将单链表置空
 //操作：将L重置为空表
-Status ClearList(LinkList *L)
-{
+Status ClearList(LinkList *L) {
     LinkList p, r;
     //由于*L是头结点的位置，须保留，故从(*L)->next开始删
     p = (*L)->next;
@@ -62,8 +60,7 @@ Status ClearList(LinkList *L)
 
 //获取链表的元素个数
 //操作：返回L中数据元素个数
-int ListLength(LinkList L)
-{
+int ListLength(LinkList L) {
     int i = 0;
     LinkList p;
 
@@ -78,8 +75,7 @@ int ListLength(LinkList L)
 
 //获取指定元素
 //操作：用e返回L中第i个数据元素
-Status GetElem(LinkList L, int i, ElemType *e)
-{
+Status GetElem(LinkList L, int i, ElemType *e) {
     int j = 1; //由于p=L->next;是从第一个结点开始，则j需从1开始计数
     LinkList p;
     p = L->next;
@@ -98,8 +94,7 @@ Status GetElem(LinkList L, int i, ElemType *e)
 
 //找到第一个满足指定关系的元素的位置
 //操作：返回L中第1个与e满足关系的元素位序，若不存在该元素，则返回0，此处以"与e相等"为条件
-int LocateElem(LinkList L, ElemType e)
-{
+int LocateElem(LinkList L, ElemType e) {
     int i = 0;
     LinkList p;
     p = L->next;
@@ -117,8 +112,7 @@ int LocateElem(LinkList L, ElemType e)
 
 //在指定位置插入元素
 //操作：在L中第i个位置之前插入新的数据元素e
-Status ListInsert(LinkList *L, int i, ElemType e)
-{
+Status ListInsert(LinkList *L, int i, ElemType e) {
     //要使插入后的元素在链表中排第i位，则需从第i-1位和第i位之间插入，故重点应放在第i-1位元素上
     int j = 1;
     LinkList p, s;
@@ -143,8 +137,7 @@ Status ListInsert(LinkList *L, int i, ElemType e)
 
 //删除指定位置的元素
 //操作：删除L中第i个数据元素，并用e返回其值
-Status ListDelete(LinkList *L, int i, ElemType *e)
-{
+Status ListDelete(LinkList *L, int i, ElemType *e) {
     //虽然要删除的元素是第i个元素，但是要把重点放在第i-1个元素上
     int j = 1;
     LinkList p, q;
@@ -168,8 +161,7 @@ Status ListDelete(LinkList *L, int i, ElemType *e)
 
 //遍历输出链表内容
 //操作：依次对L的每个数据元素输出
-Status ListTraverse(LinkList L)
-{
+Status ListTraverse(LinkList L) {
     LinkList p;
     p = L->next;
 
@@ -184,8 +176,7 @@ Status ListTraverse(LinkList L)
 
 //头插法产生n个随机值的链表
 //操作：产生n个带随机元素值的结点，依次从头结点之后的位置插入形成链表L
-Status CreateListHead(LinkList *L, int n)
-{
+Status CreateListHead(LinkList *L, int n) {
     int i;
     LinkList p;
     srand(time(0)); //初始化随机数
@@ -205,8 +196,7 @@ Status CreateListHead(LinkList *L, int n)
 
 //尾插法产生n个随机值的链表
 //操作：产生n个带随机元素值的结点，依次接到表尾的位置形成链表
-Status CreateListTail(LinkList *L, int n)
-{
+Status CreateListTail(LinkList *L, int n) {
     int i;
     LinkList p, q;
     srand(time(0));
@@ -225,42 +215,147 @@ Status CreateListTail(LinkList *L, int n)
     return OK;
 }
 
-int main()
-{
-    LinkList L, K;
-    ElemType e;
-    //初始化单链表
-    InitLIst(&L);
+//根据用户输入创建链表
+//操作：每读取一个用户输入的数值便创建一个结点接在上一个结点之后，如用户输入-1，则链表结束
+Status CreateList(LinkList *L) {
+    int x = 1;
+    LinkList p, q;
 
-    //在L表头依次插入1~10
-    for(int i = 1; i <= 10; i++)
-    ListInsert(&L, 1, i);
-
-    //输出表L中第6个元素
-    GetElem(L, 6, &e);
-    printf("第6个元素=%d\n", e);
-
-    //删除表L中第6个元素
-    ListDelete(&L, 6, &e);
-
-    //输出表L元素个数
-    printf("表L有%d个元素\n", ListLength(L));
-
-    //尾插法产生10个随机值的链表K
-    CreateListTail(&K, 10);
-
-    //遍历输出链表K内容
-    printf("遍历输出链表K：\n");
-    ListTraverse(K);
-
-    //找出K中第一个与表L中第6个元素相同的元素位序
-    printf("K与e相等的第一个元素的位序为：%d（若为0，说明不存在该元素）\n", LocateElem(K, e));
-
-    //将表K置空
-    ClearList(&K);
-
-    //判定表K是否为空表
-    printf("重置后，K是否为空表：%d（1：是，0：否）\n", ListEmpty(K));
+    *L = (LinkList)malloc(sizeof(Node));
+    q=*L;
+    printf("请输入要存储的数据(输入-1即为停止存储)：");
+    while(x != -1) {
+        scanf("%d", &x);
+        if(x == -1)
+        break;
+        p = (LinkList)malloc(sizeof(Node));
+        q->next = p;
+        p->data = x;
+        q = p;
+    }
+    q->next = NULL;
 
     return OK;
+}
+
+//最快速度找出链表的中间位序并输出其值
+//操作：用快慢指针找出链表的中间位序交给i，将其值交给e
+Status GetMidElem(LinkList L, int *i, ElemType *e) {
+    int j = 0;
+    LinkList fast, slow;
+    fast = L;
+    slow = L;
+
+    while(fast->next != NULL) {
+        if(fast->next->next != NULL) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }else
+        {
+            fast = fast->next; //保证fast指向最后一个元素，使程序跳出while循环
+        }
+        j++;
+    }
+
+    *i = j;
+    *e = slow->data;
+
+    return OK;
+}
+
+
+int main() {
+    printf("*************************************************\n");
+    printf("1：清空原有链表，跟据输入创建链表\n");
+    printf("2：清空原有链表，随机生成一个有n个数据的链表\n");
+    printf("3：在指定位置插入一个数据\n");
+    printf("4：删除指定位置的一个数据\n");
+    printf("5：遍历输出链表内容\n");
+    printf("6：最快速度找出链表的中间位序并输出其值\n");
+    printf("7：输出链表元素个数\n");
+    printf("8：输出第一个与指定数值相同的数据元素的位序\n");
+    printf("9：输出指定位置的数据\n");
+    printf("0：结束程序\n");
+    printf("*************************************************\n\n");
+
+    int x, n, i;
+    ElemType e;
+    Status y = 1;
+    LinkList L;
+    InitList(&L);
+
+    while(y) {
+        printf("请输入您要执行的选项：");
+        scanf("%d", &x);
+        switch(x) {
+            case 1:
+	            y = ClearList(&L);
+	            y = CreateList(&L);
+	            break;
+	        case 2:
+	            ClearList(&L);
+	            printf("请输入您所需的随机链表长度：");
+	            scanf("%d", &n);
+	            y = CreateListTail(&L, n);
+	            printf("%d", y);
+	            break;
+	        case 3:
+	            printf("请输入您要插入的数据及其插入的位序：");
+	            scanf("%d %d", &e, &i);
+	            y = ListInsert(&L, i, e);
+	            break;
+	        case 4:
+	            printf("请输入您要删除的数据位序：");
+	            scanf("%d", &i);
+	            y = ListDelete(&L, i, &e);
+	            break;
+	        case 5:
+	            if(ListEmpty(L) == 1)
+	            printf("该链表为空表\n");
+	            else
+	            ListTraverse(L);
+	            break;
+	        case 6:
+	            if(ListEmpty(L) == 1)
+	            printf("该链表为空表\n");
+	            else {
+	                GetMidElem(L, &i, &e);
+	                printf("该链表的中间位序为%d，其值为%d", i, e);
+	            }
+	            break;
+	        case 7:
+	            i = ListLength(L);
+	            printf("该链表长度为：%d\n", i);
+	            break;
+	        case 8:
+	            if(ListEmpty(L) == 1)
+	            printf("该链表为空表\n");
+	            else {
+	                printf("请输入您要查找的值：");
+	                scanf("%d", &e);
+	                i = LocateElem(L, e);
+	                printf("第一个与指定数值相同的数据元素的位序是(0表示无结果)：%d", i);
+	            }
+	            break;
+	        case 9:
+	            if(ListEmpty(L) == 1)
+	            printf("该链表为空表\n");
+	            else {
+	                printf("请输入需要输出的元素位序：");
+	                scanf("%d", &i);
+	                y = GetElem(L, i, &e);
+	                printf("对应位序的数据为：%d", e);
+	            }
+	        	break;
+	        case 0:
+	            goto out;
+	        default:
+	            printf("输入错误\n");
+        }
+        if(!y)
+        printf("出错");
+    }
+    out:
+
+    return 0;
 }
