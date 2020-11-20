@@ -297,7 +297,6 @@ int main() {
 	            printf("请输入您所需的随机链表长度：");
 	            scanf("%d", &n);
 	            y = CreateListTail(&L, n);
-	            printf("%d", y);
 	            break;
 	        case 3:
 	            printf("请输入您要插入的数据及其插入的位序：");
