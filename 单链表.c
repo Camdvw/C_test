@@ -186,7 +186,7 @@ Status CreateListHead(LinkList *L, int n) {
 
     for(i = 1; i <= n; i++) {
         p = (LinkList)malloc(sizeof(Node)); //生成新结点
-        p->data = rand()%10+1; //随机生成一个10以内的数字
+        p->data = rand()%100+1; //随机生成一个10以内的数字
         p->next = (*L)->next;
         (*L)->next = p; //插入到表头
     }
@@ -206,7 +206,7 @@ Status CreateListTail(LinkList *L, int n) {
 
     for(i = 1; i <= n; i++) {
         p = (LinkList)malloc(sizeof(Node));
-        p->data = rand()%10+1;
+        p->data = rand()%100+1;
         q->next = p;
         q = p;
     }
