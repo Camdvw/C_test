@@ -343,7 +343,7 @@ int main() {
 	                printf("请输入需要输出的元素位序：");
 	                scanf("%d", &i);
 	                y = GetElem(L, i, &e);
-	                printf("对应位序的数据为：%d", e);
+	                printf("对应位序的数据为：%d\n", e);
 	            }
 	        	break;
 	        case 0:
