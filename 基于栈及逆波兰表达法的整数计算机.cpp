@@ -12,20 +12,20 @@
 typedef int SElemType;
 typedef int Status;
 
-//¶¨ÒåË³ĞòÕ» 
+//å®šä¹‰é¡ºåºæ ˆ 
 typedef struct
 {
     SElemType data[MAXSIZE];
     int top;
 }Stack;
 
-//³õÊ¼»¯Õ» 
+//åˆå§‹åŒ–æ ˆ 
 Status InitStack(Stack *S) {
     S->top = -1;
     return OK;
 }
 
-//½øÕ» 
+//è¿›æ ˆ 
 Status Push(Stack *S, SElemType e) {
     if(S->top == MAXSIZE-1)
     return ERROR;
@@ -33,7 +33,7 @@ Status Push(Stack *S, SElemType e) {
     return OK;
 }
 
-//³öÕ» 
+//å‡ºæ ˆ 
 Status Pop(Stack *S, SElemType *e) {
     if(S->top == -1)
     return ERROR;
@@ -41,7 +41,7 @@ Status Pop(Stack *S, SElemType *e) {
     return OK;
 }
 
-//Êä³öÕ»¶¥ÔªËØ 
+//è¾“å‡ºæ ˆé¡¶å…ƒç´  
 Status GetTop(Stack S, SElemType *e) {
     if(S.top == -1)
     return ERROR;
@@ -49,7 +49,7 @@ Status GetTop(Stack S, SElemType *e) {
     return OK;
 }
 
-//Êä³öÕ»ÄÚÖ¸¶¨Î»ÖÃÔªËØ 
+//è¾“å‡ºæ ˆå†…æŒ‡å®šä½ç½®å…ƒç´  
 Status GetElem(Stack S, int i, SElemType *e) {
     if(S.top == -1)
     return ERROR;
@@ -59,7 +59,7 @@ Status GetElem(Stack S, int i, SElemType *e) {
     return OK;
 }
 
-//¶¨ÒåÔËËã·ûºÅÓÅÏÈ¼¶ 
+//å®šä¹‰è¿ç®—ç¬¦å·ä¼˜å…ˆçº§ 
 int Priority(char c) {
     switch(c) {
         case '(': return 0;
@@ -72,7 +72,7 @@ int Priority(char c) {
     }
 }
 
-//ÓÉÕ»µ×±éÀúÊä³öÕ»ÄÚÔªËØ 
+//ç”±æ ˆåº•éå†è¾“å‡ºæ ˆå†…å…ƒç´  
 Status StackTraverse(Stack S) {
     int i;
     for(i = 0; i <= S.top; i++) {
@@ -81,17 +81,17 @@ Status StackTraverse(Stack S) {
     return OK;
 }
 
-//ÖĞ×º±í´ïÊ½×ªºó×º±í´ïÊ½
+//ä¸­ç¼€è¡¨è¾¾å¼è½¬åç¼€è¡¨è¾¾å¼
 Status Conversion(Stack *S, Stack *L) {
     char c;
     SElemType e;
 
-    printf("ÇëÊäÈëËãÊ½£¬²¢ÒÔ'#'½áÊøÊäÈë:\n");
+    printf("è¯·è¾“å…¥ç®—å¼ï¼Œå¹¶ä»¥'#'ç»“æŸè¾“å…¥:\n");
     scanf("%c", &c);
 
     while(c != '#') {
 
-        while(c >= '0' && c <= '9')//¹ıÂËÊı×Ö
+        while(c >= '0' && c <= '9')//è¿‡æ»¤æ•°å­—
         {
             Push(L, c);
             //printf("%c", c);
@@ -105,7 +105,7 @@ Status Conversion(Stack *S, Stack *L) {
         if(c == '#')
         break;
         else if(Priority(c) == -1) {
-            printf("\n³ö´í£ºÊäÈë¸ñÊ½´íÎó\n");
+            printf("\nå‡ºé”™ï¼šè¾“å…¥æ ¼å¼é”™è¯¯\n");
             return ERROR;
         }
         else if(S->top == -1 || c == '(')
@@ -143,7 +143,7 @@ Status Conversion(Stack *S, Stack *L) {
     return OK;
 }
 
-//ÔËËãºó×º±í´ïÊ½ 
+//è¿ç®—åç¼€è¡¨è¾¾å¼ 
 Status Count(Stack *S, Stack L) {
     int k, f, s;
     int i = 1;
@@ -155,12 +155,12 @@ Status Count(Stack *S, Stack L) {
 
     for(i; i <= L.top+1;) {
 
-        while(e >= '0' && e <= '9')//¹ıÂËÊı×Ö 
+        while(e >= '0' && e <= '9')//è¿‡æ»¤æ•°å­— 
 		{
             buf[j++] = e;
             buf[j] = '\0';
             if(j >= MAXSIZE_BUF) {
-                printf("\nÊıÖµ³¬³ö´¦Àí·¶Î§\n");
+                printf("\næ•°å€¼è¶…å‡ºå¤„ç†èŒƒå›´\n");
                 return ERROR;
             }
             GetElem(L, ++i, &e);
@@ -192,11 +192,11 @@ Status Count(Stack *S, Stack L) {
             Pop(S, &s);
             Pop(S, &f);
             if(f%s != 0) {
-                printf("±¾¼ÆËãÆ÷²»Ö§³Ö¸¡µã¼ÆËã");
+                printf("æœ¬è®¡ç®—å™¨ä¸æ”¯æŒæµ®ç‚¹è®¡ç®—");
                 return ERROR;
             }
             else if(!s)
-            printf("\n³ıÊı²»ÄÜÎª0\n");
+            printf("\né™¤æ•°ä¸èƒ½ä¸º0\n");
             else
             Push(S, f/s);
             break;
@@ -206,7 +206,7 @@ Status Count(Stack *S, Stack L) {
     }
 
     Pop(S, &k);
-    printf("¼ÆËã½á¹ûÎª£º%d\n", k);
+    printf("è®¡ç®—ç»“æœä¸ºï¼š%d\n", k);
 
     return OK;
 }
