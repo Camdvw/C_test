@@ -165,7 +165,7 @@ Status Count(Stack *S, Stack L) {
             }
             GetElem(L, ++i, &e);
             if(e == ' ') {
-                k = atoi(buf);
+                k = atoi(buf);//atoi（）函数用于将字符串转换成int类型的一个数字，包含于stdlib.h文件中
                 Push(S, k);
                 j = 0;
                 GetElem(L, ++i, &e);
