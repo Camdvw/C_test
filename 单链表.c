@@ -216,7 +216,7 @@ Status CreateListTail(LinkList *L, int n) {
 
 //根据用户输入创建链表
 //操作：每读取一个用户输入的数值便创建一个结点接在上一个结点之后，如用户输入-1，则链表结束
-Status CreateList(LinkList *L) {
+Status ScanfList(LinkList *L) {
     int x = 1;
     LinkList p, q;
 
@@ -289,7 +289,7 @@ int main() {
         switch(x) {
             case 1:
 	            y = ClearList(&L);
-	            y = CreateList(&L);
+	            y = ScanfList(&L);
 	            break;
 	        case 2:
 	            ClearList(&L);
